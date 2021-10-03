@@ -4,10 +4,14 @@ import time
 
 from RPA.Robocorp.Vault import Vault
 
-secret = Vault().get_secret("credentials")
-USER_NAME = secret["username"]
-PASSWORD = secret["password"]
-BANKING_LOGIN_URL= secret["login_url"]
+credential_secrets = Vault().get_secret("banking")
+USER_NAME = credential_secrets["username"]
+PASSWORD = credential_secrets["password"]
+BANKING_LOGIN_URL= credential_secrets["login_url"]
+
+transaction_secrets = Vault().get_secret("transactions")
+PAYCHEQUE_DEPOSIT = transaction_secrets["payroll_deposit_label"]
+
 
 from RPA.Browser.Selenium import Selenium
 VIRTUAL_BROWSER = Selenium()
@@ -25,9 +29,12 @@ def minimal_task():
 
     for x in range(0, 20):
         # is_element_attribute_equal_to(locator: str, attribute: str, expected: str) → boo
-        if VIRTUAL_BROWSER.is_element_attribute_equal_to(DESCRIPTION_ELEMENT_ID + x, "value", "Online Transfer Out") :
-            print("HAHA SAME!")
+        if VIRTUAL_BROWSER.is_element_attribute_equal_to(DESCRIPTION_ELEMENT_ID + str(x), "innerText", PAYCHEQUE_DEPOSIT) :
+            print("WEEEE MONEY!!!")
             print(x)
+        else :
+            print("naw dawg, probably bills")
+            print(DESCRIPTION_ELEMENT_ID + str(x))
     
     # time.sleep(4)
     time.sleep(10);
