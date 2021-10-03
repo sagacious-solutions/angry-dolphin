@@ -1,5 +1,4 @@
 import time
-# import os # so you can import enviroment variables
 
 from RPA.Robocorp.Vault import Vault
 
@@ -9,7 +8,7 @@ PASSWORD = credential_secrets["password"]
 BANKING_LOGIN_URL= credential_secrets["login_url"]
 
 transaction_secrets = Vault().get_secret("transactions")
-PAYCHEQUE_DEPOSIT = transaction_secrets["payroll_deposit_label"]
+PAYCHEQUE_DEPOSIT_DESCRIPTION = transaction_secrets["payroll_deposit_label"]
 
 
 from RPA.Browser.Selenium import Selenium
@@ -29,7 +28,7 @@ def retrieve_pay_amount():
 
     # looks through each individual transaction listed to see if the description matches a pay roll deposit
     for x in range(0, ROW_COUNT):
-        if VIRTUAL_BROWSER.is_element_attribute_equal_to(DESCRIPTION_ELEMENT_ID + str(x), "innerText", PAYCHEQUE_DEPOSIT) :
+        if VIRTUAL_BROWSER.is_element_attribute_equal_to(DESCRIPTION_ELEMENT_ID + str(x), "innerText", PAYCHEQUE_DEPOSIT_DESCRIPTION) :
             PAYCHEQUE_AMMOUNT = VIRTUAL_BROWSER.get_element_attribute(VALUE_ELEMENT_ID + str(x), "innerText")
             print("You have aquired " + str(PAYCHEQUE_AMMOUNT) + "CAD in currency")
     
@@ -38,9 +37,3 @@ def retrieve_pay_amount():
 
 if __name__ == "__main__":
     retrieve_pay_amount()
-
-
-
-
-# lib.input_text("id:user-name", username)
-# lib.input_text("id:password", password)
