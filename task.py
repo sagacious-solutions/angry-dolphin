@@ -25,15 +25,15 @@ def minimal_task():
 
     # append end with number to iterate items
     DESCRIPTION_ELEMENT_ID = "MainContent_TransactionMainContent_txpTransactions_ctl01_transactionStatementsControl_flwTransactionStatements_GvTransactionStatements_lblDescription_"
+    VALUE_ELEMENT_ID = "MainContent_TransactionMainContent_txpTransactions_ctl01_transactionStatementsControl_flwTransactionStatements_GvTransactionStatements_lblAmount_"
     ROW_COUNT = VIRTUAL_BROWSER.get_element_count("class:item")
-    # print("There are " + str(ROW_COUNT) + " rows")
-
 
     for x in range(0, ROW_COUNT):
         # is_element_attribute_equal_to(locator: str, attribute: str, expected: str) → boo
         if VIRTUAL_BROWSER.is_element_attribute_equal_to(DESCRIPTION_ELEMENT_ID + str(x), "innerText", PAYCHEQUE_DEPOSIT) :
             print("WEEEE MONEY!!!")
-            print(x)
+            PAYCHEQUE_AMMOUNT = VIRTUAL_BROWSER.get_element_attribute(VALUE_ELEMENT_ID + str(x), "innerText")
+            print("BRUH! You got paid " + str(PAYCHEQUE_AMMOUNT))
         else :
             print("naw dawg, probably bills")
             print(DESCRIPTION_ELEMENT_ID + str(x))
