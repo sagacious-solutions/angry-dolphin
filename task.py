@@ -40,18 +40,26 @@ FILE_SYSTEM_CONTROLLER = FileSystem()
 #     print("Done.")
 
 def get_latest_spreadsheet(sheets):
-    year = 1997
-    month = 1
-    day = 1
+    latest_year = 1997
+    latest_month = 1
+    latest_day = 1
 
     print("retrieve latest spreadsheet")
     for sheet in sheets :
         print(sheet.name)
-        date_array = sheet.name.split('-')
-        year = date_array[0]
-        month = date_array[1]
-        day = date_array[2].split('.')[0]
-        print(year, month, day)
+        date_array = list(map(int, sheet.name.split('.')[0].split('-')))
+        print(date_array)
+        
+        # if date_array[0] >= latest_year:
+        #     latest_year = int(date_array[0])
+            
+        #     if date_array[1] >= latest_month:
+        #         latest_month = int(date_array[1])
+
+        #         if date_array[2] >= latest_day:
+        #             latest_day = int(date_array[2].split('.')[0])
+    
+        print(latest_year, latest_month, latest_day)
 
 
 def clone_budget_spreadsheet():
