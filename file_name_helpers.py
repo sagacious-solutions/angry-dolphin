@@ -18,7 +18,6 @@ def get_latest_spreadsheet(sheets):
         if budget_file_date > latest_budget_file_name:
             latest_budget_file_name = budget_file_date
 
-    print("Here is latest file", latest_budget_file_name)
     return latest_budget_file_name
 
 
@@ -26,8 +25,13 @@ def get_latest_spreadsheet(sheets):
 # Takes in the DATE OBJECT found for the last budget file name, returns a STRING to create the next budget file
 def name_next_sheet (date_of_last, PAY_PERIOD_LENGTH):
     next_budget_date = date_of_last + timedelta(days = PAY_PERIOD_LENGTH)
-    next_budget_filename = next_budget_date.isoformat()
 
-    return next_budget_filename.split("T")[0] + ".xlsx"
+    return make_file_name(next_budget_date)
+
+# Takes in the DATE OBJECT, returns a STRING with file extension
+def make_file_name (date_for_file):
+    FILENAME = date_for_file.isoformat().split("T")[0] + ".xlsx"
+
+    return FILENAME
 
     
