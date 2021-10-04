@@ -23,7 +23,7 @@ def get_latest_spreadsheet(sheets):
 
 
 
-# Takes in the date object found for the last budget file name, creates the next one based on pay period
+# Takes in the DATE OBJECT found for the last budget file name, returns a STRING to create the next budget file
 def name_next_sheet (date_of_last, PAY_PERIOD_LENGTH):
     next_budget_date = date_of_last + timedelta(days = PAY_PERIOD_LENGTH)
     next_budget_filename = next_budget_date.isoformat()
