@@ -1,4 +1,4 @@
-from file_name_helpers import get_latest_spreadsheet, name_next_sheet
+from file_name_helpers import get_latest_spreadsheet, name_next_sheet, make_file_name
 
 
 from RPA.Robocorp.Vault import Vault
@@ -14,7 +14,7 @@ BANKING_LOGIN_URL= credential_secrets["login_url"]
 transaction_secrets = Vault().get_secret("transactions")
 PAYCHEQUE_DEPOSIT_DESCRIPTION = transaction_secrets["payroll_deposit_label"]
 
-budget_spreadsheet_directory = "./DataSets"
+BUDGET_SPREADSHEET_DIRECTORY = "./DataSets"
 
 VIRTUAL_BROWSER = Selenium()
 FILE_SYSTEM_CONTROLLER = FileSystem()
@@ -43,13 +43,15 @@ PAY_PERIOD_LENGTH_IN_DAYS = 14
 
 
 def clone_budget_spreadsheet():
-    all_budget_spreadsheets = FILE_SYSTEM_CONTROLLER.list_files_in_directory(budget_spreadsheet_directory)
+    all_budget_spreadsheets = FILE_SYSTEM_CONTROLLER.list_files_in_directory(BUDGET_SPREADSHEET_DIRECTORY)
     date_of_last_pay = get_latest_spreadsheet(all_budget_spreadsheets)    
 
+    LAST_SPREADSHEET_NAME = make_file_name(date_of_last_pay)
     NEW_SPREADSHEET_NAME = name_next_sheet(date_of_last_pay, PAY_PERIOD_LENGTH_IN_DAYS)
 
-    print (NEW_SPREADSHEET_NAME)
+    FILE_SYSTEM_CONTROLLER.copy_file(BUDGET_SPREADSHEET_DIRECTORY + '/' + LAST_SPREADSHEET_NAME, BUDGET_SPREADSHEET_DIRECTORY + '/' + NEW_SPREADSHEET_NAME)
 
+    print (NEW_SPREADSHEET_NAME, " has been created.")
 
 if __name__ == "__main__":
     # retrieve_pay_amount()
