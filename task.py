@@ -1,5 +1,5 @@
-import time
-import re
+import datetime
+from datetime import timedelta
 
 from RPA.Robocorp.Vault import Vault
 from RPA.Browser.Selenium import Selenium
@@ -39,27 +39,25 @@ FILE_SYSTEM_CONTROLLER = FileSystem()
     
 #     print("Done.")
 
+# This gets passed a list of my budget spread sheets, it determines the latest one based on FILENAME formatted as (YEAR-MONTH-DAY) eg.(2021-10-4)
 def get_latest_spreadsheet(sheets):
-    latest_year = 1997
-    latest_month = 1
-    latest_day = 1
+    TEN_YEARS_AGO_IN_WEEKS = 520
+    latest_budget_file_name = datetime.datetime.now() - timedelta(weeks = TEN_YEARS_AGO_IN_WEEKS)
 
-    print("retrieve latest spreadsheet")
     for sheet in sheets :
-        print(sheet.name)
-        date_array = list(map(int, sheet.name.split('.')[0].split('-')))
-        print(date_array)
-        
-        # if date_array[0] >= latest_year:
-        #     latest_year = int(date_array[0])
-            
-        #     if date_array[1] >= latest_month:
-        #         latest_month = int(date_array[1])
+        string_date_array = sheet.name.split('.')[0].split('-')
+        date_array = []
 
-        #         if date_array[2] >= latest_day:
-        #             latest_day = int(date_array[2].split('.')[0])
-    
-        print(latest_year, latest_month, latest_day)
+        for date in string_date_array:
+            date_array.append(int(date))
+
+        budget_file_date = datetime.datetime(date_array[0],date_array[1],date_array[2])      
+
+        if budget_file_date > latest_budget_file_name:
+            latest_budget_file_name = budget_file_date
+
+    print("Here is latest file", latest_budget_file_name)
+    return latest_budget_file_name
 
 
 def clone_budget_spreadsheet():
