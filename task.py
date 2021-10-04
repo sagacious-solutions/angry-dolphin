@@ -1,5 +1,5 @@
 import datetime
-from datetime import timedelta
+from datetime import timedelta, date
 
 from RPA.Robocorp.Vault import Vault
 from RPA.Browser.Selenium import Selenium
@@ -18,6 +18,7 @@ budget_spreadsheet_directory = "./DataSets"
 
 VIRTUAL_BROWSER = Selenium()
 FILE_SYSTEM_CONTROLLER = FileSystem()
+PAY_PERIOD_LENGTH_IN_DAYS = 14 
 
 
 # def retrieve_pay_amount():
@@ -60,9 +61,23 @@ def get_latest_spreadsheet(sheets):
     return latest_budget_file_name
 
 
+
+# Takes in the date object found for the last budget file name, creates the next one based on pay period
+def name_next_sheet (date_of_last, PAY_PERIOD_LENGTH):
+    next_budget_date = date_of_last + timedelta(days = PAY_PERIOD_LENGTH)
+    next_budget_filename = next_budget_date.isoformat()
+
+    return next_budget_filename.split("T")[0] + ".xlsx"
+
+    
+
 def clone_budget_spreadsheet():
     all_budget_spreadsheets = FILE_SYSTEM_CONTROLLER.list_files_in_directory(budget_spreadsheet_directory)
-    get_latest_spreadsheet(all_budget_spreadsheets)
+    date_of_last_pay = get_latest_spreadsheet(all_budget_spreadsheets)    
+
+    NEW_SPREADSHEET_NAME = name_next_sheet(date_of_last_pay, PAY_PERIOD_LENGTH_IN_DAYS)
+
+    print (NEW_SPREADSHEET_NAME)
 
 if __name__ == "__main__":
     # retrieve_pay_amount()
