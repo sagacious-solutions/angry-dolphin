@@ -66,14 +66,25 @@ def retrieve_budget_sheet(WORKBOOK_FILENAME):
     finally:
         budget_workbook.close_workbook()
 
-def update_budget_data(sheet):
-    print(sheet)
+def update_budget_data(sheet, EXCEL_FILE_NAME):
+    print("Updating budget spread sheet for", EXCEL_FILE_NAME)
+    # print(sheet)
 
+def debugging_deleteLastCreateFile():
+    MISSING_OK = False
+    FILENAME = "2021-10-15.xlsx"
+
+    try: 
+        print("TRY TO DELETE LAST FILE", FILENAME)
+        FILE_SYSTEM_CONTROLLER.remove_file(BUDGET_SPREADSHEET_DIRECTORY + "/" + FILENAME,MISSING_OK)
+    except:
+        print("We couldn't find the file")
 
 
 if __name__ == "__main__":
     # retrieve_pay_amount()
+    debugging_deleteLastCreateFile()
     EXCEL_FILE_NAME = clone_budget_spreadsheet()
     monthly_budget_sheet = retrieve_budget_sheet(EXCEL_FILE_NAME)
-    update_budget_data(monthly_budget_sheet)
+    update_budget_data(monthly_budget_sheet, EXCEL_FILE_NAME)
 
