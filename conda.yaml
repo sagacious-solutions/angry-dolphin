@@ -13,4 +13,3 @@ dependencies:
       # Define pip packages here.
       # https://pypi.org/
       - rpaframework==11.2.1 # https://rpaframework.org/releasenotes.html
-      - tabulate==0.8.9
