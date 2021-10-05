@@ -13,7 +13,7 @@ BUDGET_SPREADSHEET_DIRECTORY = "./DataSets"
 PRIMARY_WORKSHEET = "monthly"
 BUDGET_COLUMN_HEIGHT_IN_ROWS = 12
 EARLY_MONTH_BILLS = 'C'
-LATE_MONTH_BILLS = 'G'
+LATE_MONTH_BILLS = 'D'
 BILLS_FOR_PAY_PERIOD = 'F'
 PAY_PERIOD_LENGTH_IN_DAYS = 14
 
@@ -51,7 +51,9 @@ def update_budget_table(budget_table, EXCEL_FILE_NAME):
 
     PAY_DATE_DAY = int(EXCEL_FILE_NAME.split('-')[2].split('.')[0])
 
-    if PAY_DATE_DAY > 15 :
+    print(PAY_DATE_DAY)
+
+    if PAY_DATE_DAY <= 15 :
         print("EARLY PAY")
         updated_table = copy_table_column(budget_table, LATE_MONTH_BILLS, BILLS_FOR_PAY_PERIOD)
     else :
@@ -74,12 +76,20 @@ def copy_table_column(sheet, source, destination):
 
     
 def update_budget_workbook_with_new_table(EXCEL_FILE_NAME, new_budget_table):
+    HEADER = False
+    EXIST_OK = False
     budget_workbook = Files()
-
+    
     try:
         budget_workbook.open_workbook(BUDGET_SPREADSHEET_DIRECTORY + '/' + EXCEL_FILE_NAME)
-        budget_workbook.append_rows_to_worksheet(new_budget_table, PRIMARY_WORKSHEET)
+
+        budget_workbook.create_worksheet("BUDGET", new_budget_table, EXIST_OK, HEADER)
+        # budget_workbook.append_rows_to_worksheet(new_budget_table, PRIMARY_WORKSHEET, HEADER)
+
+        budget_workbook.save_workbook()
+
+        print("Workbook " + EXCEL_FILE_NAME + " has been updated!")
     except:
-        print("Unable to open workbook @update_budget_workbook_with_new_table")
+        print("Unable to complete @update_budget_workbook_with_new_table")
     finally:
         budget_workbook.close_workbook()
