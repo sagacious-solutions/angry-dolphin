@@ -33,11 +33,11 @@ def debugging_deleteLastCreateFile():
         print("We couldn't find the file")
 
 if __name__ == "__main__":
-    retrieve_pay_amount()
+    LAST_PAY = retrieve_pay_amount()
     debugging_deleteLastCreateFile()
     
     EXCEL_FILE_NAME = clone_budget_spreadsheet()
 
-    update_bills_sheet(EXCEL_FILE_NAME)
+    POWER_BILL_AMMOUNT = get_power_bill()
 
-    power_bill_ammount = get_power_bill()
+    update_bills_sheet(EXCEL_FILE_NAME, POWER_BILL_AMMOUNT, LAST_PAY)

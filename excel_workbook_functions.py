@@ -28,9 +28,18 @@ def copy_worksheet_column(workbook ,sheet, source, destination):
     return workbook
 
 
+def add_bill_to_budget(workbook, BILL_AMMOUNT, BILL_ROW):
+    workbook.set_cell_value(BILL_ROW, BILLS_FOR_PAY_PERIOD, BILL_AMMOUNT, PRIMARY_WORKSHEET)
+
+def add_pay_cheque_to_budget(workbook, LAST_PAY, INCOME_ROW):
+    workbook.set_cell_value(INCOME_ROW, BILLS_FOR_PAY_PERIOD, LAST_PAY, PRIMARY_WORKSHEET)
+
+
 # This updates monthly bills sheet with the bills for this pay period
-def update_bills_sheet(EXCEL_FILE_NAME):
+def update_bills_sheet(EXCEL_FILE_NAME, POWER_BILL_AMMOUNT, LAST_PAY):
     budget_workbook = Files()
+    POWER_BILL_SHEET_ROW = 7
+    INCOME_ROW = 41
 
     try:
         budget_workbook.open_workbook(BUDGET_SPREADSHEET_DIRECTORY + '/' + EXCEL_FILE_NAME)
@@ -46,6 +55,11 @@ def update_bills_sheet(EXCEL_FILE_NAME):
         copy_worksheet_column(budget_workbook, PRIMARY_WORKSHEET, LATE_MONTH_BILLS, BILLS_FOR_PAY_PERIOD)
     else :
         copy_worksheet_column(budget_workbook, PRIMARY_WORKSHEET, EARLY_MONTH_BILLS, BILLS_FOR_PAY_PERIOD)
+
+    if POWER_BILL_AMMOUNT > 0 :
+        add_bill_to_budget(budget_workbook, POWER_BILL_AMMOUNT, POWER_BILL_SHEET_ROW)
+
+    add_pay_cheque_to_budget(budget_workbook, LAST_PAY, INCOME_ROW)
     
     budget_workbook.save_workbook()
     budget_workbook.close_workbook()
