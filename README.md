@@ -7,5 +7,5 @@ This is a robot to retrieve my last pay cheque amount from my bank. Full functio
 <li>Retrieves Paycheque amount from banking site and prints it to console.</li>
 <li>Checks budget directory and determines the last budget file based on filename</li>
 <li>Creates a clone of the that file (to be appended), with filename for the next pay period</li>
-<li>Reads spreadsheet into new table and updates the values for next spreadsheet</li>
+<li>Updates the new workbook with the correct bills to come out for the pay period</li>
 </ul>
