@@ -1,4 +1,4 @@
-from file_name_helpers import get_latest_spreadsheet, name_next_sheet, make_file_name
+from file_name_helpers import get_latest_filename, name_next_sheet, make_file_name
 
 
 from RPA.Robocorp.Vault import Vault
@@ -47,8 +47,8 @@ PRIMARY_WORKSHEET = "monthly"
 
 
 def clone_budget_spreadsheet():
-    all_budget_spreadsheets = FILE_SYSTEM_CONTROLLER.list_files_in_directory(BUDGET_SPREADSHEET_DIRECTORY)
-    date_of_last_pay = get_latest_spreadsheet(all_budget_spreadsheets)    
+    file_list_from_directory = FILE_SYSTEM_CONTROLLER.list_files_in_directory(BUDGET_SPREADSHEET_DIRECTORY)
+    date_of_last_pay = get_latest_filename(file_list_from_directory)    
 
     LAST_SPREADSHEET_NAME = make_file_name(date_of_last_pay)
     NEW_SPREADSHEET_NAME = name_next_sheet(date_of_last_pay, PAY_PERIOD_LENGTH_IN_DAYS)
