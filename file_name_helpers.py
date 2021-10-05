@@ -1,5 +1,5 @@
 import datetime
-from datetime import timedelta, date
+from datetime import timedelta
 
 # def parse_filename(filename):
     
@@ -8,12 +8,10 @@ from datetime import timedelta, date
 def get_latest_filename(all_filenames):
     TEN_YEARS_AGO_IN_WEEKS = 520
     latest_budget_file_name = datetime.datetime.now() - timedelta(weeks = TEN_YEARS_AGO_IN_WEEKS) # initialize to be old
-
-    print ()    
-
+    CURRENT_YEAR = str(datetime.datetime.now().date().year)
 
     for filename in all_filenames :
-        if filename.name.startswith(str(datetime.datetime.now().date().year)):
+        if filename.name.startswith(CURRENT_YEAR):
             string_date_array = filename.name.split('.')[0].split('-')
             date_array = []
 
