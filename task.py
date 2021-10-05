@@ -38,6 +38,6 @@ if __name__ == "__main__":
     
     EXCEL_FILE_NAME = clone_budget_spreadsheet()
 
-    update_bills_sheet(EXCEL_FILE_NAME)
+    POWER_BILL_AMMOUNT = get_power_bill()
 
-    power_bill_ammount = get_power_bill()
+    update_bills_sheet(EXCEL_FILE_NAME, POWER_BILL_AMMOUNT)
