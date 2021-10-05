@@ -1,5 +1,5 @@
 from online_banking_functions import retrieve_pay_amount
-from excel_workbook_functions import clone_budget_spreadsheet, retrieve_budget_sheet, update_budget_table
+from excel_workbook_functions import *
 
 
 from RPA.FileSystem import FileSystem
@@ -21,7 +21,12 @@ def debugging_deleteLastCreateFile():
 if __name__ == "__main__":
     # retrieve_pay_amount()
     debugging_deleteLastCreateFile()
+    
     EXCEL_FILE_NAME = clone_budget_spreadsheet()
-    monthly_budget_sheet = retrieve_budget_sheet(EXCEL_FILE_NAME)
-    update_budget_table(monthly_budget_sheet, EXCEL_FILE_NAME)
+    
+    monthly_budget_table = make_table_from_workbook_sheet(EXCEL_FILE_NAME)
+
+    updated_monthly_budget_table = update_budget_table(monthly_budget_table, EXCEL_FILE_NAME)
+
+    update_budget_workbook_with_new_table(EXCEL_FILE_NAME, updated_monthly_budget_table)
 
