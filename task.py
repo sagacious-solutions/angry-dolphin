@@ -24,20 +24,4 @@ if __name__ == "__main__":
     
     EXCEL_FILE_NAME = clone_budget_spreadsheet()
 
-    BUDGET_WORKBOOK = open_budget_workbook(EXCEL_FILE_NAME)
-
-    update_bills_sheet(BUDGET_WORKBOOK, EXCEL_FILE_NAME)
-    
-    # NO LONGER USING A TABLE, WILL MANIPULATE DIRECTLY
-
-
-    # monthly_budget_table = make_table_from_workbook_sheet(EXCEL_FILE_NAME)
-
-    # print(tabulate(monthly_budget_table))
-
-    # updated_monthly_budget_table = update_budget_table(monthly_budget_table, EXCEL_FILE_NAME)
-
-    # print(tabulate(updated_monthly_budget_table))
-
-    update_budget_workbook_with_new_table(EXCEL_FILE_NAME, updated_monthly_budget_table)
-
+    update_bills_sheet(EXCEL_FILE_NAME)
