@@ -45,15 +45,19 @@ def get_power_bill():
     LOGIN_EMAIL = bills_secrets["email"]
     LOGIN_PASSWORD = bills_secrets["password"]
 
-    print ("FETCHING POWER BILL")
     VIRTUAL_BROWSER.open_available_browser(POWER_PROVIDER_LOGIN)
     VIRTUAL_BROWSER.input_text_when_element_is_visible("email", LOGIN_EMAIL)
     VIRTUAL_BROWSER.input_text_when_element_is_visible("password", LOGIN_PASSWORD + '\n')
-    # time.sleep(5)
+
     VIRTUAL_BROWSER.wait_until_element_is_visible("class=bill_amount", 10,"Unable to locate amount due")
     BILL_AMMOUNT_STRING = VIRTUAL_BROWSER.get_element_attribute("class=bill_amount", "innerText")
+    BILL_AMOUNT_FLOAT = float(BILL_AMMOUNT_STRING.split('$')[1])
 
-    print("Your power bill amount is ", BILL_AMMOUNT_STRING)
+
+    if BILL_AMOUNT_FLOAT > 0 :
+        print("You owe " + BILL_AMMOUNT_STRING + "for power.")
+    else :
+        print("Nothing currently owed for power")
 
 
-    return BILL_AMMOUNT_STRING.split('$')[1]
+    return BILL_AMOUNT_FLOAT
