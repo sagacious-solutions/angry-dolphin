@@ -9,4 +9,5 @@ This is a robot to retrieve my last pay cheque amount from my bank. Full functio
 <li>Creates a clone of the that file (to be appended), with filename for the next pay period</li>
 <li>Updates the new workbook with the correct bills to come out for the pay period</li>
 <li>Fetches power bill from power provider</li>
+<li>Updates the new workbook with the powerbill and paycheque</li>
 </ul>
