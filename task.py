@@ -3,7 +3,10 @@ from file_name_helpers import get_latest_spreadsheet, name_next_sheet, make_file
 
 from RPA.Robocorp.Vault import Vault
 from RPA.Browser.Selenium import Selenium
+
 from RPA.Excel.Files import Files
+from RPA.Tables import Tables
+
 from RPA.FileSystem import FileSystem
 
 credential_secrets = Vault().get_secret("banking")
@@ -18,7 +21,8 @@ BUDGET_SPREADSHEET_DIRECTORY = "./DataSets"
 
 VIRTUAL_BROWSER = Selenium()
 FILE_SYSTEM_CONTROLLER = FileSystem()
-PAY_PERIOD_LENGTH_IN_DAYS = 14 
+PAY_PERIOD_LENGTH_IN_DAYS = 14
+PRIMARY_WORKSHEET = "monthly"
 
 
 # def retrieve_pay_amount():
@@ -52,7 +56,24 @@ def clone_budget_spreadsheet():
     FILE_SYSTEM_CONTROLLER.copy_file(BUDGET_SPREADSHEET_DIRECTORY + '/' + LAST_SPREADSHEET_NAME, BUDGET_SPREADSHEET_DIRECTORY + '/' + NEW_SPREADSHEET_NAME)
 
     print (NEW_SPREADSHEET_NAME, " has been created.")
+    return NEW_SPREADSHEET_NAME
+
+def retrieve_budget_sheet(WORKBOOK_FILENAME):
+    budget_workbook = Files()
+    budget_workbook.open_workbook(BUDGET_SPREADSHEET_DIRECTORY + '/' + WORKBOOK_FILENAME)
+    try:
+        return budget_workbook.read_worksheet(PRIMARY_WORKSHEET)
+    finally:
+        budget_workbook.close_workbook()
+
+def update_budget_data(sheet):
+    print(sheet)
+
+
 
 if __name__ == "__main__":
     # retrieve_pay_amount()
-    clone_budget_spreadsheet()
+    EXCEL_FILE_NAME = clone_budget_spreadsheet()
+    monthly_budget_sheet = retrieve_budget_sheet(EXCEL_FILE_NAME)
+    update_budget_data(monthly_budget_sheet)
+
