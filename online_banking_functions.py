@@ -1,5 +1,15 @@
 from RPA.Browser.Selenium import Selenium
 
+from RPA.Robocorp.Vault import Vault
+
+credential_secrets = Vault().get_secret("banking")
+USER_NAME = credential_secrets["username"]
+PASSWORD = credential_secrets["password"]
+BANKING_LOGIN_URL= credential_secrets["login_url"]
+
+transaction_secrets = Vault().get_secret("transactions")
+PAYCHEQUE_DEPOSIT_DESCRIPTION = transaction_secrets["payroll_deposit_label"]
+
 VIRTUAL_BROWSER = Selenium()
 
 # This function logs into online banking, Its generalized to reuse later
