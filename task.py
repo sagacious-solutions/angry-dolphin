@@ -1,4 +1,4 @@
-from online_banking_functions import retrieve_pay_amount
+from website_functions import *
 from excel_workbook_functions import *
 from file_name_helpers import get_latest_filename, name_next_sheet, make_file_name
 
@@ -33,9 +33,11 @@ def debugging_deleteLastCreateFile():
         print("We couldn't find the file")
 
 if __name__ == "__main__":
-    # retrieve_pay_amount()
+    retrieve_pay_amount()
     debugging_deleteLastCreateFile()
     
     EXCEL_FILE_NAME = clone_budget_spreadsheet()
 
     update_bills_sheet(EXCEL_FILE_NAME)
+
+    power_bill_ammount = get_power_bill()
