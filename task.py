@@ -45,7 +45,7 @@ PRIMARY_WORKSHEET = "monthly"
 #     print("Done.")
 
 
-
+# This gets the last pay period workbook and makes a copy of it for the current pay period
 def clone_budget_spreadsheet():
     file_list_from_directory = FILE_SYSTEM_CONTROLLER.list_files_in_directory(BUDGET_SPREADSHEET_DIRECTORY)
     date_of_last_pay = get_latest_filename(file_list_from_directory)    
@@ -58,6 +58,7 @@ def clone_budget_spreadsheet():
     print (NEW_SPREADSHEET_NAME, " has been created.")
     return NEW_SPREADSHEET_NAME
 
+# This gets the sheet requested from the opened workbook
 def retrieve_budget_sheet(WORKBOOK_FILENAME):
     budget_workbook = Files()
     budget_workbook.open_workbook(BUDGET_SPREADSHEET_DIRECTORY + '/' + WORKBOOK_FILENAME)
@@ -66,9 +67,18 @@ def retrieve_budget_sheet(WORKBOOK_FILENAME):
     finally:
         budget_workbook.close_workbook()
 
+# This updates the newly opened sheet with correct bills for the time of the month
 def update_budget_data(sheet, EXCEL_FILE_NAME):
     print("Updating budget spread sheet for", EXCEL_FILE_NAME)
-    # print(sheet)
+    PAY_DAT_DAY = int(EXCEL_FILE_NAME.split('-')[2])
+
+    if PAY_DAT_DAY > 15 :
+        print("EARLY PAY")
+    else :
+        print ("late pay")
+
+
+
 
 def debugging_deleteLastCreateFile():
     MISSING_OK = False
