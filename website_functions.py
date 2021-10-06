@@ -39,6 +39,21 @@ def retrieve_pay_amount():
     print("Done.")
     return PAYCHEQUE_AMMOUNT
 
+
+# Login to online banking and pay power bill
+def pay_power_bill(bill_amount_float) :
+    login_to_banking()
+
+    BILL_PAYMENTS_ELEMENT = "Container2_transactionMenus_top_topS_4_liAmg_0"
+    HAMBURGER_ELEMENT = "MenuToogle"
+    PAY_BILLS_ELEMENT = "Container2_transactionMenus_top_topS_4_topSI_0_aSMG_0"
+
+    VIRTUAL_BROWSER.click_element_when_visible(HAMBURGER_ELEMENT)
+    VIRTUAL_BROWSER.click_element_when_visible(BILL_PAYMENTS_ELEMENT)
+    VIRTUAL_BROWSER.click_element_when_visible(PAY_BILLS_ELEMENT)
+
+    
+
 def get_power_bill():
     bills_secrets = Vault().get_secret("bills")
     POWER_PROVIDER_LOGIN = bills_secrets["power_provider_login"]
