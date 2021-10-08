@@ -41,21 +41,30 @@ def retrieve_pay_amount():
 
 
 # Login to online banking and pay power bill
+# Currently not able to complete billpayment due to 2 factor authentication on bank site
+# To be completed later if wanted
 def pay_power_bill(bill_amount_float) :
-    login_to_banking()
-
     BILL_PAYMENTS_ELEMENT = "Container2_transactionMenus_top_topS_4_liAmg_0"
     HAMBURGER_ELEMENT = "MenuToogle"
     PAY_BILLS_ELEMENT = "Container2_transactionMenus_top_topS_4_topSI_0_aSMG_0"
     POWER_BILL_FIELD_ELEMENT_NAME = "ctl00$ctl00$MainContent$TransactionMainContent$txpTransactions$ctl01$rpBulkPayments$ctl01$txtAmount$txField"
     CONTINUE_BUTTON_ID = "MainContent_TransactionMainContent_txpTransactions_btnNextFlowItem"
+    CONFIRM_BUTTON_XPATH = "//*[text() = 'Confirm']"
 
+    login_to_banking()
+
+    # Navigate to bill payments page
     VIRTUAL_BROWSER.click_element_when_visible(HAMBURGER_ELEMENT)
     VIRTUAL_BROWSER.click_element_when_visible(BILL_PAYMENTS_ELEMENT)
     VIRTUAL_BROWSER.click_element_when_visible(PAY_BILLS_ELEMENT)
-    # VIRTUAL_BROWSER.click_element_when_visible(PAY_BILLS_ELEMENT)
+
+    # Enter bill_amount_float into bill payee
     VIRTUAL_BROWSER.input_text_when_element_is_visible(POWER_BILL_FIELD_ELEMENT_NAME, str(bill_amount_float))
-    VIRTUAL_BROWSER.click_element_when_visible(CONTINUE_BUTTON_ID)
+    VIRTUAL_BROWSER.click_element_when_visible(CONTINUE_BUTTON_ID)    
+    
+    # Confirm bill payment
+    VIRTUAL_BROWSER.click_element_when_visible(CONFIRM_BUTTON_XPATH)
+    # Two factor authentication has been implemented by bank. This will need more work to get around that.
     time.sleep(3)
 
     
